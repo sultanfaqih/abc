@@ -190,6 +190,7 @@ function base_package() {
     apt-get clean all; sudo apt-get autoremove -y
     apt-get install vnstat -y
     apt-get install lolcat -y
+    apt-get install lsof -y
     gem install lolcat
     print_ok "Berhasil memasang paket yang dibutuhkan"
 }
