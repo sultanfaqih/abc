@@ -21,7 +21,7 @@ cek_reg_mode() {
 }
 clear
 
-### Color
+## Color
 Green="\e[92;1m"
 RED="\033[31m"
 YELLOW="\033[33m"
