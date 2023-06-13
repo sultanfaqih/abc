@@ -43,7 +43,7 @@ ${RED}Make sure the internet is smooth when installing the script${FONT}
 }
 KytTunneling() {
 MYIP=$(curl -sS ipv4.icanhazip.com)
-    IZIN=$(curl -sS https://raw.githubusercontent.com/myridwan/izinvps/ipuk/ip | awk '{print $4}' | grep $MYIP)
+    IZIN=$(curl -sS https://raw.githubusercontent.com/sultanfaqih/IP/main/ip | awk '{print $4}' | grep $MYIP)
     if [ "$MYIP" = "$IZIN" ]; then
         TIMEDATE
     else
@@ -52,7 +52,7 @@ MYIP=$(curl -sS ipv4.icanhazip.com)
     KYTPROJECT
 }
 KYTPROJECT() {
-    curl -sS https://raw.githubusercontent.com/myridwan/izinvps/ipuk/ip >/root/tmp
+    curl -sS https://raw.githubusercontent.com/sultanfaqih/IP/main/ip >/root/tmp
     data=($(cat /root/tmp | grep -E "^### " | awk '{print $2}'))
     for user in "${data[@]}"; do
         exp=($(grep -E "^### $user" "/root/tmp" | awk '{print $3}'))
@@ -114,10 +114,10 @@ ISP=$(wget -qO- ipinfo.io/org)
 CITY=$(curl -s ipinfo.io/city)
 TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
-KEY="6006599143:AAEgstCAioq35JgX97HaW_G3TAkLKzLZS_w"
+KEY="6123066349:AAE2Z5IiY0WIESCeDYKcVLJLyJsPKdXd6os"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
-REPO="https://raw.githubusercontent.com/myridwan/abc/ipuk/"
-CDNF="https://raw.githubusercontent.com/myridwan/abc/ipuk"
+REPO="https://raw.githubusercontent.com/sultanfaqih/abc/ipuk/"
+CDNF="https://raw.githubusercontent.com/sultanfaqih/abc/ipuk"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
 start=$(date +%s)
