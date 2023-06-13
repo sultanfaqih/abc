@@ -1,8 +1,8 @@
 #!/bin/bash
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
 TIMES="10"
-CHATID="1316596937"
-KEY="6003347945:AAHv1Ti4HQliYwpYm8sbKrriDkSMqqJLUqE"
+CHATID="1269398984"
+KEY="6123066349:AAE2Z5IiY0WIESCeDYKcVLJLyJsPKdXd6os"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 clear
 domain=$(cat /etc/xray/domain)

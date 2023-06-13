@@ -2,8 +2,8 @@
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
 AKUN="TRIALL TROJAN"
 TIMES="10"
-CHATID="1210833546"
-KEY="6006599143:AAEgstCAioq35JgX97HaW_G3TAkLKzLZS_w"
+CHATID="1269398984"
+KEY="6123066349:AAE2Z5IiY0WIESCeDYKcVLJLyJsPKdXd6os"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 clear
 domain=$(cat /etc/xray/domain)

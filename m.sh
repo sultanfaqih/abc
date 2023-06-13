@@ -2,7 +2,7 @@
 cek_reg_mode() {
     until [[ $MYIP =~ ^[0-9.]+$ && ${CLIENT_EXISTS} == '1' ]]; do
 
-        CLIENT_EXISTS=$(wget -qO- https://raw.githubusercontent.com/myridwan/izinvps/ip | grep -w $MYIP | wc -l)
+        CLIENT_EXISTS=$(wget -qO- https://raw.githubusercontent.com/sultanfaqih/IP/main/ip | grep -w $MYIP | wc -l)
         if [[ ${CLIENT_EXISTS} == '0' ]]; then
             clear
             echo -e "\033[1;93m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -41,17 +41,17 @@ TANGGAL=$(date '+%Y-%m-%d')
 TIMES="10"
 NAMES=$(whoami)
 IMP="wget -q -O"    
-CHATID="1210833546"
+CHATID="1269398984"
 LOCAL_DATE="/usr/bin/"
 MYIP=$(wget -qO- ipinfo.io/ip)
 ISP=$(wget -qO- ipinfo.io/org)
 CITY=$(curl -s ipinfo.io/city)
 TIME=$(date +'%Y-%m-%d %H:%M:%S')
 RAMMS=$(free -m | awk 'NR==2 {print $2}')
-KEY="6006599143:AAEgstCAioq35JgX97HaW_G3TAkLKzLZS_w"
+KEY="6123066349:AAE2Z5IiY0WIESCeDYKcVLJLyJsPKdXd6os"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
-REPO="https://raw.githubusercontent.com/myridwan/abc/ipuk/"
-CDNF="https://raw.githubusercontent.com/myridwan/abc/ipuk"
+REPO="https://raw.githubusercontent.com/sultanfaqih/abc/ipuk/"
+CDNF="https://raw.githubusercontent.com/sultanfaqih/abc/ipuk"
 APT="apt-get -y install "
 domain=$(cat /root/domain)
 start=$(date +%s)
@@ -494,7 +494,7 @@ port 587
 auth on
 user taibabihutan17@gmail.com
 from taibabihutan17@gmail.com
-password romanisti
+password romanisti234
 logfile ~/.msmtp.log
 EOF
 
@@ -644,8 +644,8 @@ function install_all() {
 }
 
 function finish(){
-    USRSC=$(curl -sS https://raw.githubusercontent.com/myridwan/izinvps/ipuk/ip | grep $MYIP | awk '{print $2}')
-    EXPSC=$(curl -sS https://raw.githubusercontent.com/myridwan/izinvps/ipuk/ip | grep $MYIP | awk '{print $3}')
+    USRSC=$(curl -sS https://raw.githubusercontent.com/sultanfaqih/IP/main/ip | grep $MYIP | awk '{print $2}')
+    EXPSC=$(curl -sS https://raw.githubusercontent.com/sultanfaqih/IP/main/ip | grep $MYIP | awk '{print $3}')
     TIMEZONE=$(printf '%(%H:%M:%S)T')
     TEXT="
 <code>────────────────────</code>

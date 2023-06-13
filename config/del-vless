@@ -2,8 +2,8 @@
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 #########################
-CHATID="1210833546"
-KEY="6006599143:AAEgstCAioq35JgX97HaW_G3TAkLKzLZS_w"
+CHATID="1269398984"
+KEY="6123066349:AAE2Z5IiY0WIESCeDYKcVLJLyJsPKdXd6os"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 TIMES="10"
 domain=$(cat /etc/xray/domain)
