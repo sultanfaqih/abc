@@ -1,0 +1,39 @@
+#!/bin/bash
+clear
+grenbo="\e[92;1m"
+NC='\033[0m'
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \e[1;97;101m          MENU MANAGER TROJAN          \E[0m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[1;93m〔⎆〕${grenbo}1.${NC} \033[0;36mCreating a Trojan Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}2.${NC} \033[0;36mTrial a Trojan Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}3.${NC} \033[0;36mDelete Trojan Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}4.${NC} \033[0;36mRenew Trojan Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}5.${NC} \033[0;36mCheck Trojan login Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}6.${NC} \033[0;36mLog Create a Trojan Account${NC}"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e ""
+read -p "Select From Options [ 1 - 4 ] : " menu
+case $menu in
+1)
+    add-tr
+    ;;
+2)
+    triall-tr
+    ;;
+3)
+    del-tr
+    ;;
+4)
+    renew-tr
+    ;;
+5)
+    cek-tr
+    ;;
+6)
+    user-tr
+    ;;
+*)
+    menu
+    ;;
+esac

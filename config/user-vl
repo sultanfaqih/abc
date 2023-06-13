@@ -1,0 +1,189 @@
+#!/bin/bash
+PUB=$(cat /etc/slowdns/server.pub)
+NS=$(cat /etc/xray/dns)
+clear
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vl# " "/etc/vless/.vless.db")
+        if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
+  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+  echo -e " \e[1;97;101m          CONFIG VLESS ACCOUNT          \E[0m"
+  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+                echo ""
+                echo "You have no existing clients!"
+                clear
+                exit 1
+        fi
+
+  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+  echo -e "  \e[1;97;101m        CONFIG VLESS ACCOUNT         \E[0m"
+  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo "     No  Expired   User"
+        grep -E "^#vl# " "/etc/vless/.vless.db" | cut -d ' ' -f 2-3 | nl -s ') '
+        until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
+                if [[ ${CLIENT_NUMBER} == '1' ]]; then
+                        read -rp "Select one client [1]: " CLIENT_NUMBER
+                else
+                        read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
+                fi
+        done
+user=$(grep -E "^#vl# " "/etc/vless/.vless.db" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+domain=$(cat /etc/xray/domain)
+uuid=$(grep "$uuid" /etc/vless/.vless.db | cut -b 21-56 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#vl# " "/etc/vless/.vless.db" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+hariini=`date -d "0 days" +"%Y-%m-%d"`
+VLESS_WS=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "443",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/vless",
+      "type": "none",
+      "host": "${domain}",
+      "tls": "tls"
+}
+EOF`
+VLESS_NON_TLS=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "80",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "ws",
+      "path": "/vless",
+      "type": "none",
+      "host": "${domain}",
+      "tls": "none"
+}
+EOF`
+VLESS_GRPC=`cat<<EOF
+      {
+      "v": "2",
+      "ps": "${user}",
+      "add": "${domain}",
+      "port": "443",
+      "id": "${uuid}",
+      "aid": "0",
+      "net": "grpc",
+      "path": "/vless-grpc",
+      "type": "none",
+      "host": "${domain}",
+      "tls": "tls"
+}
+EOF`
+cat >/var/www/html/vless-$user.txt <<-END
+==========================
+        P R O J E C T 
+==========================
+Owner: t.me/Kytxz
+==========================
+    Format Vless WS (CDN)
+==========================
+
+- name: geostore-Vless-$user-WS (CDN)
+  type: vless
+  server: ${domain}
+  port: 443
+  uuid: ${uuid}
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: ${domain}
+  network: ws
+  ws-opts:
+    path: /vless
+    headers:
+      Host: ${domain}
+_______________________________________________________
+              Format Vless WS (CDN) Non TLS
+_______________________________________________________
+
+- name: geostore-$user-WS (CDN) Non TLS
+  type: vless
+  server: ${domain}
+  port: 80
+  uuid: ${uuid}
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: false
+  skip-cert-verify: false
+  servername: ${domain}
+  network: ws
+  ws-opts:
+    path: /vless
+    headers:
+      Host: ${domain}
+_______________________________________________________
+              Format Vless gRPC (SNI)
+_______________________________________________________
+
+- name: geostore-$user-gRPC (SNI)
+  server: ${domain}
+  port: 443
+  type: vless
+  uuid: ${uuid}
+  alterId: 0
+  cipher: auto
+  network: grpc
+  tls: true
+  servername: ${domain}
+  skip-cert-verify: true
+  grpc-opts:
+  grpc-service-name: vless-grpc
+_______________________________________________________
+              Link Vless Account
+_______________________________________________________
+Link TLS : vless://$(echo $VLESS_WS | base64 -w 0)
+_______________________________________________________
+Link none TLS : vless://$(echo $VLESS_NON_TLS | base64 -w 0)
+_______________________________________________________
+Link GRPC : vless://$(echo $VLESS_GRPC | base64 -w 0)
+_______________________________________________________
+
+
+
+END
+vlesslink1="vless://$(echo $VLESS_WS | base64 -w 0)"
+vlesslink2="vless://$(echo $VLESS_NON_TLS | base64 -w 0)"
+vlesslink3="vless://$(echo $VLESS_GRPC | base64 -w 0)"
+
+clear
+echo -e ""
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "  \e[1;97;101m        CONFIG VLESS ACCOUNT         \e[0m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Remarks           : ${user}"
+echo -e "Domain            : ${domain}"
+echo -e "Host Slowdns      : ${NS}"
+echo -e "Pub Key           : ${PUB}"
+echo -e "Port DNS          : 443, 53 "
+echo -e "Port TLS          : 443"
+echo -e "Port None TLS     : 80, 8080, 8880"
+echo -e "Port GRPC         : 443"
+echo -e "ID                : ${uuid}"
+echo -e "AlterId           : 0"
+echo -e "Security          : Auto"
+echo -e "Network           : WS"
+echo -e "Path WS / GRPC    : /vless - /vless-grpc"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link WS TLS       : ${vlesslink1}"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link WS None TLS  : ${vlesslink2}"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link GRPC         : ${vlesslink3}"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Format OpenClash : https://${domain}:81/vless-$user.txt"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Created On        : $hariini"
+echo -e "Expired On        : $exp"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e ""
+read -n 1 -s -r -p "Press [ Enter ] to back on menu"
+vless

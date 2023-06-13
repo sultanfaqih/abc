@@ -1,0 +1,162 @@
+#!/bin/bash
+red() { echo -e "\\033[32;1m${*}\\033[0m"; }
+AKUN="TRIALL TROJAN"
+TIMES="10"
+CHATID="1210833546"
+KEY="6006599143:AAEgstCAioq35JgX97HaW_G3TAkLKzLZS_w"
+URL="https://api.telegram.org/bot$KEY/sendMessage"
+clear
+domain=$(cat /etc/xray/domain)
+PUB=$(cat /etc/slowdns/server.pub)
+CITY=$(cat /etc/xray/city)
+NS=$(cat /etc/xray/dns)
+masaaktif=1
+Quota=5
+user=Trial-TR`</dev/urandom tr -dc 0-9 | head -c3`
+masaaktif=1
+Quota=0
+clear 
+uuid=$(cat /proc/sys/kernel/random/uuid)
+exp=$(date -d "$masaaktif days" +"%Y-%m-%d")
+sed -i '/#trojanws$/a\#tr# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+sed -i '/#trojangrpc$/a\#tr# '"$user $exp"'\
+},{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
+cat >/var/www/html/trojan-$user.txt <<-END
+=============================
+             P R O J E C T
+=============================
+https://github.com/myridwan/scriptvps
+=============================
+ Format Trojan GO/WS (CDN)
+=============================
+
+- name: Trojan-$user-GO/WS (CDN)
+  server: ${domain}
+  port: 443
+  type: trojan
+  password: ${uuid}
+  network: ws
+  sni: ${domain}
+  skip-cert-verify: true
+  udp: true
+  ws-opts:
+    path: /trojan-ws
+    headers:
+        Host: ${domain}
+_______________________________
+  Format Trojan gRPC
+_______________________________
+
+- name: Trojan-$user-gRPC (SNI)
+  type: trojan
+  server: ${domain}
+  port: 443
+  password: ${uuid}
+  udp: true
+  sni: ${domain}
+  skip-cert-verify: true
+  network: grpc
+  grpc-opts:
+    grpc-service-name: trojan-grpc
+
+_______________________________
+Link Trojan Account
+_______________________________
+Link WS : trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}
+_______________________________
+Link GRPC : trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}
+_______________________________
+
+
+
+END
+systemctl restart xray
+systemctl restart nginx
+service cron restart
+trojanlink="trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
+trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}"
+TRX="
+<code>INFO MASKU -Transaksi</code>
+<code>────────────────────</code>
+<b>      ⚠️TRIALL TROJAN WS⚠️      </b>
+<code>────────────────────</code>
+<code>🌟Owner   : $OWNER</code>
+<code>🌟Detail  : $AKUN</code>
+<code>🌟Durasi  : $exp</code>
+<code>🌟Server  : $domain</code>
+<code>────────────────────</code>
+<i>Notifikasi Via RstoreBOT</i>
+<b>Tele : @kytxz</b>
+"
+TEXT="
+<code>──────────────────────────</code>
+<code>    ⚠️Xray/Trojan Account</code>⚠️
+<code>──────────────────────────</code>
+<code>💥Remarks      : ${user}</code>
+<code>💥Domain       : ${domain}</code>
+<code>💥Location     : $CITY</code>
+<code>💥User Quota   : ${Quota} GB</code>
+<code>💥Port XRAY     : 443/80</code>
+<code>💥User ID      : ${uuid}</code>
+<code>💥AlterId      : 0</code>
+<code>💥Security     : auto</code>
+<code>💥Network      : WS or gRPC</code>
+<code>💥Path NLS     : (/multi path)</code>
+<code>💥Path Dynamic : CF-XRAY:http://bug.com</code>
+<code>💥ServiceName  : trojan-grpc</code>
+<code>──────────────────────────</code>
+<code>🔮Format OpenClash :</code>
+http://${domain}:81/trojan-$user.txt
+<code>️📅Expired On : $exp</code>
+<code>──────────────────────────</code>
+"
+if [ ! -e /etc/trojan ]; then
+  mkdir -p /etc/trojan
+fi
+
+if [ -z ${Quota} ]; then
+  Quota="0"
+fi
+
+c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
+d=$((${c} * 1024 * 1024 * 1024))
+
+if [[ ${c} != "0" ]]; then
+  echo "${d}" >/etc/trojan/${user}
+fi
+DATADB=$(cat /etc/trojan/.trojan.db | grep "^#tr#" | grep -w "${user}" | awk '{print $2}')
+if [[ "${DATADB}" != '' ]]; then
+  sed -i "/\b${user}\b/d" /etc/trojan/.trojan.db
+fi
+echo "#tr# ${user} ${exp} ${uuid}" >>/etc/trojan/.trojan.db
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL
+clear
+curl -s --max-time $TIMES -d "chat_id=$CHATIDGC&disable_web_page_preview=1&text=$TRX&parse_mode=html" $URL
+clear
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+  echo -e " \e[1;97;101m      TRIALL XRAY/TROJAN ACCOUNT        \E[0m"
+  echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Remarks     : ${user}" | tee -a /etc/tr/user.log
+echo -e "Host        : ${domain}" | tee -a /etc/tr/user.log
+echo -e "Host Slowdns: ${NS}" | tee -a /etc/tr/user.log
+echo -e "Pub Key     : ${PUB}" | tee -a /etc/tr/user.log
+echo -e "Location    : $CITY" | tee -a /etc/tr/user.log
+echo -e "User Quota  : ${Quota} GB" | tee -a /etc/tr/user.log
+echo -e "Port DNS    : 443, 53 " | tee -a /etc/tr/user.log
+echo -e "Port TLS    : 443" | tee -a /etc/tr/user.log
+echo -e "port        : 443" | tee -a /etc/tr/user.log
+echo -e "Key         : ${uuid}" | tee -a /etc/tr/user.log
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"/tr/user.log
+echo -e "Link WS    : ${trojanlink}" | tee -a /etc/tr/user.log
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Link GRPC  : ${trojanlink1}" | tee -a /etc/tr/user.log
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Format OpenClash : https://${domain}:81/trojan-$user.txt" | tee -a /etc/tr/user.log
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "Expired On : $exp" | tee -a /etc/tr/user.log
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "" | tee -a /etc/tr/user.log
+read -n 1 -s -r -p "Press [ Enter ] to back on menu"
+
+trojan

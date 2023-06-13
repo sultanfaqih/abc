@@ -1,0 +1,39 @@
+#!/bin/bash
+clear
+grenbo="\e[92;1m"
+NC='\033[0m'
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \e[1;97;101m          MENU MANAGER VLESS           \E[0m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033[1;93m〔⎆〕${grenbo}1.${NC} \033[0;36mCreating a Vless Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}2.${NC} \033[0;36mTrial a Vless Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}3.${NC} \033[0;36mDelete Vless Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}4.${NC} \033[0;36mRenew Vless Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}5.${NC} \033[0;36mCheck Vless login Account${NC}"
+echo -e "\033[1;93m〔⎆〕${grenbo}6.${NC} \033[0;36mLog Account a Vless Account${NC}"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e ""
+read -p "Select From Options [ 1 - 4 ] : " menu
+case $menu in
+1)
+    add-vless
+    ;;
+2)
+    triall-vless
+    ;;
+3)
+    del-vless
+    ;;
+4)
+    renew-vless
+    ;;
+5)
+    cek-vless
+    ;;
+6)
+    user-vl
+    ;;
+*)
+    menu
+    ;;
+esac

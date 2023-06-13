@@ -1,0 +1,73 @@
+#!/bin/bash
+clear
+red() { echo -e "\\033[32;1m${*}\\033[0m"; }
+NUMBER_OF_CLIENTS=$(grep -c -E "^#ssh# " "/etc/ssh/.ssh.db")
+	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
+		 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+         echo -e " \e[1;97;101m           RENEW SSH ACCOUNT           \e[0m"
+         echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+		echo ""
+		echo "You have no existing clients!"
+        echo ""
+		exit 1
+	fi
+	echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+         echo -e " \e[1;97;101m           RENEW SSH ACCOUNT           \e[0m"
+         echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+         echo "     NO User Expired  "
+	
+	grep -E "^#ssh# " "/etc/ssh/.ssh.db" | cut -d ' ' -f 2-3 | nl -s ') '
+         echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+
+	until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
+		if [[ ${CLIENT_NUMBER} == '1' ]]; then
+			read -rp "Select one client [1]: " CLIENT_NUMBER
+		else
+			read -rp "Select one client you want to renew [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
+
+        fi
+	done
+egrep "^$User" /etc/passwd >/dev/null
+if [ $? -eq 0 ]; then
+    read -p "Day Extend : " Days
+    if [ -z $Days ]; then
+        Days="1"
+    fi
+user=$(grep -E "^#ssh# " "/etc/ssh/.ssh.db" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#ssh# " "/etc/ssh/.ssh.db" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+now=$(date +%Y-%m-%d)
+d1=$(date -d "$exp" +%s)
+d2=$(date -d "$now" +%s)
+exp2=$(( (d1 - d2) / 86400 ))
+exp3=$(($exp2 + $Days))
+exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
+sed -i "s/#ssh# $user $exp/#ssh# $user $exp4/g" /etc/ssh/.ssh.db
+egrep "^$user" /etc/passwd >/dev/null
+    Today=$(date +%s)
+    Days_Detailed=$(($Days * 86400))
+    Expire_On=$(($Today + $Days_Detailed))
+    Expiration=$(date -u --date="1970-01-01 $Expire_On sec GMT" +%Y/%m/%d)
+    Expiration_Display=$(date -u --date="1970-01-01 $Expire_On sec GMT" '+%d %b %Y')
+    passwd -u $user
+    usermod -e $Expiration $user
+    egrep "^$user" /etc/passwd >/dev/null
+    echo -e "$Pass\n$Pass\n" | passwd $user &>/dev/null
+    clear
+    echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \e[1;97;101m           RENEW SSH ACCOUNT           \E[0m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "   Username   : $user"
+    echo -e "   Days Added : $Days Days"
+    echo -e "   Expires on : $Expiration_Display"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+else
+    clear
+    echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e " \e[1;97;101m        RENEW SSH ACCOUNT           \E[0m"
+echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "Username Doesnt Exist      "
+fi
+echo ""
+read -n 1 -s -r -p "Press [ Enter ] to back on menu"
+ssh
+
