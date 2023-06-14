@@ -23,7 +23,7 @@ BURIQ () {
 ISP=$(curl -s ipinfo.io/org | cut -d " " -f 2-10 )
 CITY=$(curl -s ipinfo.io/city )
 MYIP=$(curl -sS ipv4.icanhazip.com)
-Name=$(curl -sS https://raw.githubusercontent.com/myridwan/izinvps/ipuk/ip | grep $MYIP | awk '{print $2}')
+Name=$(curl -sS https://raw.githubusercontent.com/sultanfaqih/IP/main/ip | grep $MYIP | awk '{print $2}')
 echo $Name > /usr/local/etc/.$Name.ini
 CekOne=$(cat /usr/local/etc/.$Name.ini)
 
@@ -40,7 +40,7 @@ fi
 
 PERMISSION () {
     MYIP=$(curl -sS ipv4.icanhazip.com)
-    IZIN=$(curl -sS https://raw.githubusercontent.com/myridwan/izinvps/ipuk/ip | awk '{print $4}' | grep $MYIP)
+    IZIN=$(curl -sS https://raw.githubusercontent.com/sultanfaqih/IP/main/ip | awk '{print $4}' | grep $MYIP)
     if [ "$MYIP" = "$IZIN" ]; then
     Bloman
     else
@@ -60,7 +60,7 @@ PERMISSION
 if [ "$res" = "Expired" ]; then
 Exp="\e[36mExpired\033[0m"
 else
-Exp=$(curl -sS https://raw.githubusercontent.com/myridwan/izinvps/ipuk/ip | grep $MYIP | awk '{print $3}')
+Exp=$(curl -sS https://raw.githubusercontent.com/sultanfaqih/IP/main/ip | grep $MYIP | awk '{print $3}')
 fi
 UDPX="https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1S3IE25v_fyUfCLslnujFBSBMNunDHDk2' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1S3IE25v_fyUfCLslnujFBSBMNunDHDk2"
 # COLOR VALIDATION
@@ -90,8 +90,8 @@ CYAN='\033[0;96m'        # Cyan
 YELLOW='\033[0;93m'      # Yellow
 NC='\e[0m'
 
-UPDATE="https://raw.githubusercontent.com/myridwan/abc/ipuk/"
-BOT="https://raw.githubusercontent.com/myridwan/src/ipuk/"
+UPDATE="https://raw.githubusercontent.com/sultanfaqih/abc/ipuk/"
+BOT="https://raw.githubusercontent.com/sultanfaqih/src/ipuk/"
 ISP=$(cat /etc/xray/isp)
 NS=$(cat /etc/xray/dns)
 CITY=$(cat /etc/xray/city)

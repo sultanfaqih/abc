@@ -32,5 +32,5 @@ message="
 <code>━━━━━━━━━━━━━━━━━━━━━</code>
 "
 
-curl -s -X POST "https://api.telegram.org/bot6006599143:AAEgstCAioq35JgX97HaW_G3TAkLKzLZS_w/sendmessage" \
--d "chat_id=-1001956940889" -d "parse_mode=html" -d "text=$message" >/dev/null 2>&1
+curl -s -X POST "https://api.telegram.org/bot6123066349:AAE2Z5IiY0WIESCeDYKcVLJLyJsPKdXd6os/sendmessage" \
+-d "chat_id=-1269398984" -d "parse_mode=html" -d "text=$message" >/dev/null 2>&1
